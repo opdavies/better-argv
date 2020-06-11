@@ -48,38 +48,30 @@ final class Argv
     private function parseAndFormatArgs(string $args): Collection
     {
         $argsArray = explode(' ', $args);
-        $newCollection = new Collection();
 
-        (new Collection($argsArray))
-            ->each(
+        return (new Collection($argsArray))
+            ->mapWithKeys(
                 function (string $currentArg, int $i) use (
-                    $argsArray,
-                    $newCollection
-                ): void {
+                    $argsArray
+                ): array {
                     $isNextArg = array_key_exists($i + 1, $argsArray);
 
                     if (!$isNextArg) {
-                        return;
+                        return [];
                     }
 
                     $nextArg = $argsArray[$i + 1];
 
                     if ($this->isArgumentOrOption($nextArg)) {
                         if ($this->isArgumentOrOption($currentArg)) {
-                            $newCollection->put($currentArg, true);
-
-                            return;
+                            return [$currentArg => true];
                         }
 
-                        $newCollection->put($nextArg, true);
-
-                        return;
+                        return [$nextArg => true];
                     }
 
-                    $newCollection->put($currentArg, $nextArg);
+                    return [$currentArg => $nextArg];
                 }
             );
-
-        return $newCollection;
     }
 }
