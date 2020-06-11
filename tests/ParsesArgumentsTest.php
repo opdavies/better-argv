@@ -46,4 +46,11 @@ final class ParsesArgumentsTest extends TestCase
         $this->assertSame('main', $argv->get('-t'));
         $this->assertTrue($argv->get('--force'));
     }
+
+    public function testThatItAHandlesAnArgumentThatDoesNotExist(): void
+    {
+        $argv = Argv::createFromString('--this-exists');
+
+        $this->assertNull($argv->get('--this-does-not-exist'));
+    }
 }

@@ -22,7 +22,7 @@ final class Argv
 
     public function get(string $argName)
     {
-        return $this->args[$argName];
+        return $this->args[$argName] ?? null;
     }
 
     final private function __construct(string $args)
