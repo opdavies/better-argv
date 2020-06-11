@@ -20,6 +20,11 @@ final class Argv
         return $this->args;
     }
 
+    public function get(string $argName)
+    {
+        return $this->args[$argName];
+    }
+
     final private function __construct(string $args)
     {
         $this->args = $this->parseAndFormatArgs($args);

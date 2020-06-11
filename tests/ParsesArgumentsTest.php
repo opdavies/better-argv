@@ -38,4 +38,12 @@ final class ParsesArgumentsTest extends TestCase
             ],
         ];
     }
+
+    public function testThatItReturnsTheValueOfAnArgument(): void
+    {
+        $argv = Argv::createFromString('-t main --force');
+
+        $this->assertSame('main', $argv->get('-t'));
+        $this->assertTrue($argv->get('--force'));
+    }
 }
