@@ -62,15 +62,15 @@ final class Argv
 
                     $nextArg = $argsArray[$i + 1];
 
-                    if ($this->isArgumentOrOption($nextArg)) {
-                        if ($this->isArgumentOrOption($currentArg)) {
-                            return [$currentArg => true];
-                        }
-
-                        return [$nextArg => true];
+                    if (!$this->isArgumentOrOption($nextArg)) {
+                      return [$currentArg => $nextArg];
                     }
 
-                    return [$currentArg => $nextArg];
+                    if ($this->isArgumentOrOption($currentArg)) {
+                        return [$currentArg => true];
+                    }
+
+                    return [$nextArg => true];
                 }
             );
     }
