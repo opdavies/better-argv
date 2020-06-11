@@ -54,15 +54,14 @@ final class Argv
                 function (string $currentArg, int $i) use (
                     $argsArray
                 ): array {
-                    $isNextArg = array_key_exists($i + 1, $argsArray);
-
-                    if (!$isNextArg) {
+                    if (!$this->isNextArg($argsArray, $i)) {
                         return [];
                     }
 
-                    $nextArg = $argsArray[$i + 1];
-
-                    return $this->addNextValue($currentArg, $nextArg);
+                    return $this->addNextValue(
+                        $currentArg,
+                        $this->getNextArg($argsArray, $i)
+                    );
                 }
             );
     }
@@ -80,5 +79,15 @@ final class Argv
         }
 
         return [$nextArg => true];
+    }
+
+    private function getNextArg(array $argsArray, int $currentPosition): string
+    {
+        return $argsArray[$currentPosition + 1];
+    }
+
+    private function isNextArg(array $argsArray, int $currentPosition): bool
+    {
+        return array_key_exists($currentPosition + 1, $argsArray);
     }
 }
