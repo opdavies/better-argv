@@ -22,6 +22,10 @@ final class ParsesArgumentsTest extends TestCase
     public function providesArguments(): array
     {
         return [
+            'empty string' => [
+                'input' => '',
+                'expected' => [],
+            ],
             'argument followed by an option' => [
                 'input' => '-t main --force',
                 'expected' => [
